@@ -43,7 +43,7 @@
 			ps.executeUpdate();
 			//close the connection
 			con.close();
-			out.print("insert succeeded");
+			response.sendRedirect("createOffer.jsp");	
 		} catch (Exception e) {
 			out.print("insert failed");
 		}

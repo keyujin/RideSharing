@@ -39,8 +39,8 @@
 			ps.executeUpdate();
 			//close the connection
 			con.close();
-			out.print("insert succeeded");
-		} catch (Exception e) {
+			response.sendRedirect("createRequest.jsp");
+} catch (Exception e) {
 			out.print("insert failed");
 		}
 %>

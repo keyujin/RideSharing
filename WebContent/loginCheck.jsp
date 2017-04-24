@@ -45,13 +45,15 @@
 			result2.next();
 
 			String userType = result2.getString("uType");
+			
+			out.print(userType);
 
 			if(countMatches >0){
 				
 				if(userType.equals("0")){
 					 response.sendRedirect("createOffer.jsp");
 
-				}else if (userType.equals("1")){
+				}else {
 					 response.sendRedirect("createRequest.jsp");
 				}
 			}else{
@@ -62,7 +64,9 @@
 
 		} catch (Exception e) {
 			
-			//out.print("Login Failed");
+			out.print("Login Failed");
+			 response.sendRedirect("Login.jsp");
+
 		}
 	%>
 
