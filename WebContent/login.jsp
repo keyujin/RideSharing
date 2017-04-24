@@ -31,8 +31,14 @@ Please Input Your Credentials:
 <form method="get" action="createAccount.jsp" enctype=text/plain>
   <input type="submit" value="Create New Account">
 </form>
-<form method="get" action="forgotAccount" enctype=text/plain>
+<form method="get" action="forgotAccount.jsp" enctype=text/plain>
   <input type="submit" value="Forgot Password?">
+</form>
+<form method="get" action="adminDashboard.jsp" enctype=text/plain>
+  <input type="submit" value="Admin Functions">
+</form>
+<form method="get" action="leaderboard.jsp" enctype=text/plain>
+  <input type="submit" value="Leaderboard">
 </form>
 <br>
 
