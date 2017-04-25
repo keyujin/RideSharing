@@ -17,10 +17,13 @@ out.print((String) session.getAttribute("UserName"));
   <input type="submit" value="inbox">
 </form>
 <br>
-	<form method="post" action="addOffer.jsp">
+	<form method="post" action="<%=request.getContextPath()%>/Workers/addOffer.jsp">
 	<table>
 	<tr>    
-	<td>Time</td><td><input type="text" name="time"></td>
+	<td>Time From: (00:00:00)</td><td><input type="text" name="timeFrom"></td>
+	</tr>
+	<tr>    
+	<td>Time To: (00:00:00)</td><td><input type="text" name="timeTo"></td>
 	</tr>
 	<tr>
 	<td>Date</td><td><input type="text" name="date"></td>
@@ -30,6 +33,9 @@ out.print((String) session.getAttribute("UserName"));
 	</tr>
 	<tr>
 	<td>To Lot</td><td><input type="text" name="toLot#"></td>
+	</tr>
+	<tr>
+	<td>Number of Passengers</td><td><input type="text" name="numPass"></td>
 	</tr>
 	</table>
 	<br>
@@ -42,15 +48,18 @@ out.print((String) session.getAttribute("UserName"));
 	<input type="submit" value="Add Offer">
 	</form>
 <br>
-<h2 align="left"><font color="0000FF"><strong>Current Ride Offers</strong></font></h2>
+<h2 align="left"><font color="0000FF"><strong>Matching Ride Requests</strong></font></h2>
 				<table align="left" cellpadding = "4" cellspacing = "4" border = "4">
 				<tr>
 				</tr>
 				<tr>
-				<TH><b>Time</b></th>
+				<TH><b>Departure Time</b></th>
 				<th><b>Date</b></th>
 				<th><b>From Lot#</b></th>
 				<th><b>To Lot# </b></th>
+				<th><b>Rider Username </b></th>
+				<th><b>Accept/Deny </b></th>
+		
 				</tr>
 
 	<%
@@ -63,16 +72,23 @@ out.print((String) session.getAttribute("UserName"));
 	PreparedStatement statement = null;
 	
 	
-	statement = con.prepareStatement("SELECT * FROM RideOffers r Where r.driverUsername='"+(String) session.getAttribute("UserName")+"'");
+	statement = con.prepareStatement("SELECT rq.riderUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date");
 
 	ResultSet resultSet = statement.executeQuery();
 	while (resultSet.next()) {
 	%>
 		<tr bgcolor="#56A5EC">
-		<td><%=resultSet.getString("Time")%></td>
+		<td><%=resultSet.getString("time")%></td>
 		<td><%=resultSet.getString("Date")%></td>
 		<td><%=resultSet.getInt("FromLot")%></td>
 		<td><%=resultSet.getInt("ToLot")%></td>
+		<td><%=resultSet.getString("riderUsername")%></td>
+
+		<td><form method="get" action="inbox.jsp" enctype=text/plain>
+  			<input type="submit" value="Send Message">
+			</form>
+		</td>
+		
 		</tr>			
 		
 	<%

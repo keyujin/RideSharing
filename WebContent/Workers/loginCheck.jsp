@@ -51,10 +51,10 @@
 			if(countMatches >0){
 				
 				if(userType.equals("0")){
-					 response.sendRedirect("createOffer.jsp");
-
+				
+					 response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
 				}else {
-					 response.sendRedirect("createRequest.jsp");
+					 response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 				}
 			}else{
 				out.print("Login Failed");
@@ -65,7 +65,7 @@
 		} catch (Exception e) {
 			
 			out.print("Login Failed");
-			 response.sendRedirect("Login.jsp");
+			 response.sendRedirect(request.getContextPath()+"/login.jsp");
 
 		}
 	%>

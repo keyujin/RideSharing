@@ -17,33 +17,38 @@
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url, "keyujin", "password");
 					
-			String time = request.getParameter("time");
+			String timeFrom = request.getParameter("timeFrom");
+			String timeTo = request.getParameter("timeTo");
 			String date = request.getParameter("date");
 			String fromLot = request.getParameter("fromLot#");
 			String toLot = request.getParameter("toLot#");
+			String numPass = request.getParameter("numPass");
+
 			//String recurring = request.getParameter("recurring");
 			String driverUsername = (String)session.getAttribute("UserName");
 
 
 
 			//Make an insert statement for the Sells table:
-			String insert = "INSERT INTO RideOffers(time,date,fromLot,toLot,driverUsername)"
-					+ "VALUES (?,?,?,?,?)";
+			String insert = "INSERT INTO RideOffers(timeFrom,timeTo,date,fromLot,toLot,driverUsername,numPassengers)"
+					+ "VALUES (?,?,?,?,?,?,?)";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(insert);
 
 			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-			ps.setString(1, time);
-			ps.setString(2, date);
-			ps.setString(3, fromLot);
-			ps.setString(4, toLot);
-			ps.setString(5, driverUsername);
+			ps.setString(1, timeFrom);
+			ps.setString(2, timeTo);
+			ps.setString(3, date);
+			ps.setString(4, fromLot);
+			ps.setString(5, toLot);
+			ps.setString(6, driverUsername);
+			ps.setString(7, numPass);
 
 			//Run the query against the DB
 			ps.executeUpdate();
 			//close the connection
 			con.close();
-			response.sendRedirect("createOffer.jsp");	
+			 response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
 		} catch (Exception e) {
 			out.print("insert failed");
 		}

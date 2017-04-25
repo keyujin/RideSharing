@@ -39,7 +39,7 @@
 			ps.executeUpdate();
 			//close the connection
 			con.close();
-			response.sendRedirect("createRequest.jsp");
+			 response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 } catch (Exception e) {
 			out.print("insert failed");
 		}

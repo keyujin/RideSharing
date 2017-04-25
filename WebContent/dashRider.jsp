@@ -13,10 +13,10 @@ Welcome <%
 out.print((String) session.getAttribute("UserName"));
 %>
 <br>
-	<form method="post" action="addRequest.jsp">
+	<form method="post" action="<%=request.getContextPath()%>/Workers/addRequest.jsp">
 	<table>
 	<tr>    
-	<td>Time</td><td><input type="text" name="time"></td>
+	<td>Departure Time</td><td><input type="text" name="time"></td>
 	</tr>
 	<tr>
 	<td>Date</td><td><input type="text" name="date"></td>
@@ -59,10 +59,10 @@ out.print((String) session.getAttribute("UserName"));
 	while (resultSet.next()) {
 	%>
 		<tr bgcolor="#56A5EC">
-		<td><%=resultSet.getString("Time")%></td>
+		<td><%=resultSet.getString("time")%></td>
 		<td><%=resultSet.getString("Date")%></td>
-		<td><%=resultSet.getInt("FromLot")%></td>
-		<td><%=resultSet.getInt("ToLot")%></td>
+		<td><%=resultSet.getInt("fromLot")%></td>
+		<td><%=resultSet.getInt("toLot")%></td>
 		</tr>			
 		
 	<%
