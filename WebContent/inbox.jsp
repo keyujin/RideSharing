@@ -8,17 +8,34 @@
 <title>Inbox</title>
 </head>
 <body>
-Welcome <%out.print((String) session.getAttribute("UserName"));%> !
-<% //request.setAttribute("messageResult", false); %>
-<br>
-<br/>
-<br>
-<form method="post">
-<table border="5" cellpadding = "10">
+<% String cur_user = (String) session.getAttribute("UserName"); %>
+<table>
 <tr>
-	<td> Time Sent </td>
+<td>Logged in as: <%out.print(cur_user);%></td>
+<td></td><td></td><td>
+<td>	<form method="get" action="createMessage.jsp" enctype=text/plain>
+  		<input type="submit" value="logout" style="height:22px; width:70px" >
+		</form>
+</td>
+<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+<td>
+<form method="get" action="createMessage.jsp" enctype=text/plain>
+<input type="submit" value="Create New Message" style="height:25px; width:150px" >
+</form>
+</td>
+
+</tr>
+</table>
+
+<form method="post" action="Workers/inboxOptions.jsp">
+<br>
+<table border="5" cellpadding = "10", id="mytab1">
+<tr id = "A1">
+	<td> Date/Time Sent </td>
 	<td> Sender </td>
+	<td> Subject </td>
 	<td> Message </td>
+	<td></td>
 </tr>
 <%
 try
@@ -26,19 +43,22 @@ try
 	Class.forName("com.mysql.jdbc.Driver");
 	String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
 	Connection con = DriverManager.getConnection(url, "keyujin", "password");
-	String sql = "SELECT * FROM Emails e";
+	String sql = "SELECT e.timeSent, e.sender, e.subject, CONVERT(e.message, CHAR(20)) AS message FROM Emails e WHERE e.receiver LIKE '" + cur_user + "'ORDER BY e.timeSent DESC";
 	Statement stmt=con.createStatement();
 	ResultSet resultSet=stmt.executeQuery(sql);
+	Integer i = 0;
 	while(resultSet.next())
 	{
 %>
 		<tr>
-			<td><%=resultSet.getString("timeSent")%></td>
+			<td><%=resultSet.getTimestamp("timeSent")%></td>
 			<td><%=resultSet.getString("sender")%></td>
+			<td><%=resultSet.getString("subject") %></td>
 			<td><%=resultSet.getString("message")%></td>
+			<td><input type="radio" name="id" value= <%=i%> ><br></td>
 		</tr>
 <%
-	}
+	i++; }
 %>
 </table>
 <%
@@ -48,21 +68,24 @@ try
 }
 catch(Exception e)
 {
+	System.out.println("Failed");
 	e.printStackTrace();
 }
 %>
+
+<table>
+<tr>
+<td>Choose Action: </td>
+<td><input type="submit" name="order" value="Expand Message" style="height:25px; width:150px" ></td>
+<td><input type="submit" name="order" value="Delete Message" style="height:25px; width:150px" ></td>
+</tr>
+</table>
+<br>
+Forward to:
+<input type="text" name="newReceiver">
+<input type="submit" name="order" value="Forward Message">
 </form>
 <br/>
-<form method="get" action="createMessage.jsp" enctype=text/plain>
-  <input type="submit" value="Create Message" style="height:25px; width:150px" >
-</form>
-<%
-out.print(request.getAttribute("messageResult"));
-if(request.getAttribute("messageResult") != null && request.getAttribute("messageResult") == "true"){
-%>
-	<p style="color:blue"> Message Sent Successfully. </p>
-	response.sendRedirect(request.getContextPath() + "/createMessage.jsp");
-<%}
-%>
+<table>
 </body>
 </html>

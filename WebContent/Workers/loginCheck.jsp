@@ -10,65 +10,55 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		try {
-
-			String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
-			//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
-			Class.forName("com.mysql.jdbc.Driver");
+<%
+try {
+	String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+	Class.forName("com.mysql.jdbc.Driver");
 	
-			//Create a connection to your DB
-			Connection con = DriverManager.getConnection(url, "keyujin", "password");
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-
-		    session.setAttribute("UserName", username);
-
-			//Populate SQL statement with an actual query. It returns a single number. The number of beers in the DB.
-			String str = "SELECT COUNT(Username) AS cnt FROM UserTable u WHERE u.Username = ? AND u.Password = ?";
-			PreparedStatement stmt = con.prepareStatement(str);
-			stmt.setString(1,username);
-			stmt.setString(2,password);
-			//Run the query against the DB
-			ResultSet result = stmt.executeQuery();
-			//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
-			result.next();
-			//Parse out the result of the query
-			int countMatches = result.getInt("cnt");
-			
-			String getType = "SELECT u.userType as uType FROM UserTable u WHERE u.Username = ?";
-			PreparedStatement stmt2 = con.prepareStatement(getType);
-			stmt2.setString(1,username);
-			//Run the query against the DB
-			ResultSet result2 = stmt2.executeQuery();
-			//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
-			result2.next();
-
-			String userType = result2.getString("uType");
-			
-			out.print(userType);
-
-			if(countMatches >0){
-				
-				if(userType.equals("0")){
-				
-					 response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
-				}else {
-					 response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
+	//Create a connection to your DB
+	Connection con = DriverManager.getConnection(url, "keyujin", "password");
+	String username = request.getParameter("username");
+	String password = request.getParameter("password");
+	
+	//Populate SQL statement with an actual query.
+	String str = "SELECT COUNT(Username) AS cnt FROM UserTable u WHERE u.Username = ? AND u.Password = ?";
+	PreparedStatement stmt = con.prepareStatement(str);
+	stmt.setString(1,username);
+	stmt.setString(2,password);
+	//Run the query against the DB
+	ResultSet result = stmt.executeQuery();
+	//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
+	result.next();
+	//Parse out the result of the query
+	int countMatches = result.getInt("cnt");
+	
+	String getType = "SELECT u.userType as uType FROM UserTable u WHERE u.Username = ?";
+	PreparedStatement stmt2 = con.prepareStatement(getType);
+	stmt2.setString(1,username);
+	//Run the query against the DB
+	ResultSet result2 = stmt2.executeQuery();
+	//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
+	result2.next();
+	
+	String userType = result2.getString("uType");
+	out.print(userType);
+	if(countMatches >0){
+		if(userType.equals("0")){
+			session.setAttribute("UserName", username);
+			response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
+			}else {
+				response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 				}
-			}else{
-				out.print("Login Failed");
-			}
-			//close the connection
-			con.close();
-
-		} catch (Exception e) {
-			
+		}else{
 			out.print("Login Failed");
-			 response.sendRedirect(request.getContextPath()+"/login.jsp");
-
-		}
-	%>
-
+			response.sendRedirect(request.getContextPath()+"/login.jsp");
+			}
+	//close the connection
+	con.close();
+} catch (Exception e) {
+	out.print("Login Failed");
+	response.sendRedirect(request.getContextPath()+"/login.jsp");
+	}
+%>
 </body>
 </html>
