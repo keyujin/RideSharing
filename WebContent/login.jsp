@@ -10,43 +10,32 @@
 <title>Account Login</title>
 </head>
 <body>
+<font size = "+2">
 Please Input Your Credentials:
+</font>
 <br>
+<br>
+	<font size="+1">
 	<form method="post" action="Workers/loginCheck.jsp">
 	<table>
 	<tr>    
-	<td>Username</td><td><input type="text" name="username"></td>
+	<td>Username</td><td><input type="text" name="username" style="height:24px; width:200px"></td>
 	</tr>
 	<tr>
-	<td>Password</td><td><input type="password" name="password"></td>
+	<td>Password</td><td><input type="password" name="password" style="height:24px; width:200px"></td>
 	</tr>
 	</table>
 	<br>
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit" style="height:35px; width:300px">
 	</form>
-	
-<br>
-
+	</font>
 <br>
 <form method="get" action="createAccount.jsp" enctype=text/plain>
-  <input type="submit" value="Create New Account">
-</form>
-<form method="get" action="forgotAccount.jsp" enctype=text/plain>
-  <input type="submit" value="Forgot Password?">
-</form>
-<form method="get" action="adminDash.jsp" enctype=text/plain>
-  <input type="submit" value="Admin Functions">
-</form>
-<form method="get" action="leaderboard.jsp" enctype=text/plain>
-  <input type="submit" value="Leaderboard">
-</form>
-<form method="get" action="Workers/sendMessage.jsp" enctype=text/plain>
-  <input type="submit" value="tester">
-</form>
-<form method="get" action="inbox.jsp" enctype=text/plain>
-  <input type="submit" value="inbox">
+  <input type="submit" value="Create New Account" style="height:35px; width:300px">
 </form>
 <br>
-
+<form method="get" action="forgotAccount.jsp" enctype=text/plain>
+  <input type="submit" value="Forgot Password?" style="height:35px; width:300px">
+</form>
 </body>
 </html>

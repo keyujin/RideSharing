@@ -8,25 +8,33 @@
 <title>Inbox</title>
 </head>
 <body>
-<% String cur_user = (String) session.getAttribute("UserName"); %>
+<% 
+String cur_user = (String) session.getAttribute("UserName");
+if(cur_user == null){response.sendRedirect(request.getContextPath());}
+%>
+
 <table>
 <tr>
 <td>Logged in as: <%out.print(cur_user);%></td>
 <td></td><td></td><td>
-<td>	<form method="get" action="createMessage.jsp" enctype=text/plain>
-  		<input type="submit" value="logout" style="height:22px; width:70px" >
-		</form>
+<td>	
+	<form method="get" action="Workers/dashRedirect.jsp" enctype=text/plain>
+ 	<input type="submit" value="back to dashboard" style="height:22px; width:150px" >
+	</form>
+</td>
+<td>	
+	<form method="get" action="Workers/logout.jsp" enctype=text/plain>
+ 	<input type="submit" value="logout" style="height:22px; width:70px" >
+	</form>
 </td>
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 <td>
 <form method="get" action="createMessage.jsp" enctype=text/plain>
-<input type="submit" value="Create New Message" style="height:25px; width:150px" >
+<input type="submit" value="Create New Message" style="height:35px; width:190px" >
 </form>
 </td>
-
 </tr>
 </table>
-
 <form method="post" action="Workers/inboxOptions.jsp">
 <br>
 <table border="5" cellpadding = "10", id="mytab1">
@@ -35,7 +43,7 @@
 	<td> Sender </td>
 	<td> Subject </td>
 	<td> Message </td>
-	<td></td>
+	<td> Select </td>
 </tr>
 <%
 try
@@ -72,7 +80,7 @@ catch(Exception e)
 	e.printStackTrace();
 }
 %>
-
+<br>
 <table>
 <tr>
 <td>Choose Action: </td>
