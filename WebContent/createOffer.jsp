@@ -13,6 +13,9 @@ Welcome <%
 
 out.print((String) session.getAttribute("UserName"));
 %>
+<form method="get" action="inbox.jsp" enctype=text/plain>
+  <input type="submit" value="inbox">
+</form>
 <br>
 	<form method="post" action="addOffer.jsp">
 	<table>

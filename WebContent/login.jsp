@@ -40,6 +40,12 @@ Please Input Your Credentials:
 <form method="get" action="leaderboard.jsp" enctype=text/plain>
   <input type="submit" value="Leaderboard">
 </form>
+<form method="get" action="Workers/sendMessage.jsp" enctype=text/plain>
+  <input type="submit" value="tester">
+</form>
+<form method="get" action="inbox.jsp" enctype=text/plain>
+  <input type="submit" value="inbox">
+</form>
 <br>
 
 </body>
