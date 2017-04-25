@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>logging you in...</title>
 </head>
 <body>
 <%
@@ -43,22 +43,32 @@ try {
 	String userType = result2.getString("uType");
 	out.print(userType);
 	if(countMatches >0){
+		session.setAttribute("UserName", username);
 		if(userType.equals("0")){
-			session.setAttribute("UserName", username);
 			response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
-			}else {
-				response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
-				}
+			session.setAttribute("Access", 0);
+		}else if(userType.equals("1")){
+			response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
+			session.setAttribute("Access", 1);
+		}else if(userType.equals("2")){
+			response.sendRedirect(request.getContextPath()+"/dashSystem.jsp");
+			session.setAttribute("Access", 2);
+		}else if(userType.equals("3")){
+			response.sendRedirect(request.getContextPath()+"/dashSystem.jsp");
+			session.setAttribute("Access", 3);
 		}else{
 			out.print("Login Failed");
+			session.invalidate();
 			response.sendRedirect(request.getContextPath()+"/login.jsp");
-			}
+		}
+	}
 	//close the connection
 	con.close();
 } catch (Exception e) {
 	out.print("Login Failed");
+	session.invalidate();
 	response.sendRedirect(request.getContextPath()+"/login.jsp");
-	}
+}
 %>
 </body>
 </html>

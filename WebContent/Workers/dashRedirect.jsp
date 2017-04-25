@@ -28,8 +28,10 @@ try{
 	num.next(); 
 	id.next();
 	int countMatches = num.getInt("count");
-	out.println(countMatches + "test" + id);
+	System.out.println(countMatches + "test" + id);
 	if(countMatches != 1){
+		System.out.println("Failure (error code: 01)");
+		session.invalidate();
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
 	String userType = id.getString("userType");
@@ -38,15 +40,19 @@ try{
 	}else if(userType.equals("1")){
 		response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 	}else if(userType.equals("2")){
-		response.sendRedirect(request.getContextPath()+"/dashSupport.jsp");
+		response.sendRedirect(request.getContextPath()+"/dashSystem.jsp");
 	}else if(userType.equals("3")){
-		response.sendRedirect(request.getContextPath()+"/dashAdmin.jsp");
+		response.sendRedirect(request.getContextPath()+"/dashSystem.jsp");
 	}else{
-		out.print("Catastrophic Failure (error code: 01)");
+		System.out.println("Failure (error code: 02)");
+		session.invalidate();
+		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
 	con.close();
 }catch(Exception e){
-	out.print("Catastrophic Failure (error code: 02)");
+	System.out.println("Failure (error code: 03)");
+	session.invalidate();
+	response.sendRedirect(request.getContextPath()+"/login.jsp");
 }
 %>
 </body>

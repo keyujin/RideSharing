@@ -37,7 +37,7 @@ if(cur_user == null){response.sendRedirect(request.getContextPath());}
 </table>
 <form method="post" action="Workers/inboxOptions.jsp">
 <br>
-<table border="5" cellpadding = "10", id="mytab1">
+<table border="5" cellpadding = "10" id="mytab1">
 <tr id = "A1">
 	<td> Date/Time Sent </td>
 	<td> Sender </td>
@@ -51,7 +51,7 @@ try
 	Class.forName("com.mysql.jdbc.Driver");
 	String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
 	Connection con = DriverManager.getConnection(url, "keyujin", "password");
-	String sql = "SELECT e.timeSent, e.sender, e.subject, CONVERT(e.message, CHAR(20)) AS message FROM Emails e WHERE e.receiver LIKE '" + cur_user + "'ORDER BY e.timeSent DESC";
+	String sql = "(SELECT e.timeSent, e.sender, e.subject, CONVERT(e.message, CHAR(20)) AS message FROM Emails e WHERE e.receiver LIKE '" + cur_user + "'ORDER BY e.timeSent DESC)";
 	Statement stmt=con.createStatement();
 	ResultSet resultSet=stmt.executeQuery(sql);
 	Integer i = 0;
@@ -94,6 +94,5 @@ Forward to:
 <input type="submit" name="order" value="Forward Message">
 </form>
 <br/>
-<table>
 </body>
 </html>

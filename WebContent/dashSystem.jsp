@@ -22,16 +22,15 @@ if(cur_user == null){response.sendRedirect(request.getContextPath());}
         <td>Fullname</td>
         <td>Email</td>
         <td>Phone Number</td>
-        <td>Rides Given</td>
-        <td>Rides Taken</td>
+        <td>Rides Given/Taken</td>
    </tr>
    <%
    try
    {
        Class.forName("com.mysql.jdbc.Driver");
        String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
-		Connection con = DriverManager.getConnection(url, "keyujin", "password");
-		String sql = "SELECT u.userType, u.username, u.fullName, u.email, u.phoneNumber, u.ridesGiven, u.ridesTaken FROM UserTable u ORDER BY u.username ASC LIMIT 10";
+       Connection con = DriverManager.getConnection(url, "keyujin", "password");
+       String sql = "SELECT u.userType, u.username, u.fullName, u.email, u.phoneNumber, u.ridesGiven, u.ridesTaken FROM UserTable u ORDER BY u.username ASC LIMIT 10";
        Statement stmt=con.createStatement();
        ResultSet resultSet=stmt.executeQuery(sql);
        while(resultSet.next())
@@ -43,8 +42,7 @@ if(cur_user == null){response.sendRedirect(request.getContextPath());}
 				<td><%=resultSet.getString("fullName")%></td>
 				<td><%=resultSet.getString("email")%></td>
 				<td><%=resultSet.getString("phoneNumber")%></td>
-				<td><%=resultSet.getInt("ridesGiven") %></td>
-				<td><%=resultSet.getInt("ridesTaken") %></td>
+				<td><%=resultSet.getInt("ridesGiven") + resultSet.getInt("ridesTaken")%></td>
 				</tr>
    			<%
        }
@@ -60,7 +58,11 @@ if(cur_user == null){response.sendRedirect(request.getContextPath());}
 </form>
 <table>
 <tr>
-<td><input type="submit" name="order" value="View All Users" style="height:50px; width:250px" ></td>
+<td>
+<form method="get" action="modUser.jsp" enctype=text/plain>
+<input type="submit" value="View All Users" style="height:50px; width:250px" >
+</form>
+</td>
 <td><input type="submit" name="order" value="View Statistics" style="height:50px; width:250px"></td>
 <td><input type="submit" name="order" value="View Advertisements" style="height:50px; width:250px" ></td>
 <td>
