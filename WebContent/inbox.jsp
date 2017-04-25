@@ -9,6 +9,7 @@
 </head>
 <body>
 Welcome <%out.print((String) session.getAttribute("UserName"));%> !
+<% //request.setAttribute("messageResult", false); %>
 <br>
 <br/>
 <br>
@@ -55,5 +56,13 @@ catch(Exception e)
 <form method="get" action="createMessage.jsp" enctype=text/plain>
   <input type="submit" value="Create Message" style="height:25px; width:150px" >
 </form>
+<%
+out.print(request.getAttribute("messageResult"));
+if(request.getAttribute("messageResult") != null && request.getAttribute("messageResult") == "true"){
+%>
+	<p style="color:blue"> Message Sent Successfully. </p>
+	response.sendRedirect(request.getContextPath() + "/createMessage.jsp");
+<%}
+%>
 </body>
 </html>
