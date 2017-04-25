@@ -8,7 +8,7 @@
 </head>
 <body>
 <%-- Message Box --%>
-<form method="post" action="sendMessage.jsp">
+<form method="post" action="Workers/sendMessage.jsp">
 <table>
 <tr>
 <td>From: </td>

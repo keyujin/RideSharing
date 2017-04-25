@@ -13,7 +13,7 @@
 Please enter your details below (Required Fields Marked *):
 
 <br>
-	<form method="post" action="makeAccount.jsp">
+	<form method="post" action="Workers/makeAccount.jsp">
 	<table>
 	<tr>    
 	<td>New Username:</td><td><input type="text" name="username"></td><td>*</td>

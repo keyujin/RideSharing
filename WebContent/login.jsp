@@ -12,7 +12,7 @@
 <body>
 Please Input Your Credentials:
 <br>
-	<form method="post" action="loginCheck.jsp">
+	<form method="post" action="Workers/loginCheck.jsp">
 	<table>
 	<tr>    
 	<td>Username</td><td><input type="text" name="username"></td>
@@ -34,7 +34,7 @@ Please Input Your Credentials:
 <form method="get" action="forgotAccount.jsp" enctype=text/plain>
   <input type="submit" value="Forgot Password?">
 </form>
-<form method="get" action="adminDashboard.jsp" enctype=text/plain>
+<form method="get" action="adminDash.jsp" enctype=text/plain>
   <input type="submit" value="Admin Functions">
 </form>
 <form method="get" action="leaderboard.jsp" enctype=text/plain>

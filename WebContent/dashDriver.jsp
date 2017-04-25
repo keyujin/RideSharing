@@ -6,14 +6,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Driver DashBoard</title>
 </head>
 <body>
 Welcome <%
+
 out.print((String) session.getAttribute("UserName"));
 %>
+<form method="get" action="inbox.jsp" enctype=text/plain>
+  <input type="submit" value="inbox">
+</form>
 <br>
-	<form method="post" action="addRequest.jsp">
+	<form method="post" action="addOffer.jsp">
 	<table>
 	<tr>    
 	<td>Time</td><td><input type="text" name="time"></td>
@@ -28,11 +32,17 @@ out.print((String) session.getAttribute("UserName"));
 	<td>To Lot</td><td><input type="text" name="toLot#"></td>
 	</tr>
 	</table>
-	<input type="submit" value="Add Request">
+	<br>
+	Recurring?
+	<select name="recurring" size=1>
+		<option value="0">Yes</option>
+		<option value="1">No</option>
+	</select>&nbsp;<br>
+	<br>
+	<input type="submit" value="Add Offer">
 	</form>
 <br>
-
-<h2 align="left"><font color="0000FF"><strong>Current Ride Requests</strong></font></h2>
+<h2 align="left"><font color="0000FF"><strong>Current Ride Offers</strong></font></h2>
 				<table align="left" cellpadding = "4" cellspacing = "4" border = "4">
 				<tr>
 				</tr>
@@ -53,7 +63,7 @@ out.print((String) session.getAttribute("UserName"));
 	PreparedStatement statement = null;
 	
 	
-	statement = con.prepareStatement("SELECT * FROM RideRequests r Where r.riderUsername='"+(String) session.getAttribute("UserName")+"'");
+	statement = con.prepareStatement("SELECT * FROM RideOffers r Where r.driverUsername='"+(String) session.getAttribute("UserName")+"'");
 
 	ResultSet resultSet = statement.executeQuery();
 	while (resultSet.next()) {
