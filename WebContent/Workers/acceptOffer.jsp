@@ -35,10 +35,45 @@
 	
 			//Run the query against the DB
 			ps.executeUpdate();
+			//close the connectionString sender = (String) session.getAttribute("UserName");
+			
+			String getReciever = "SELECT r.riderUsername as reciever FROM RideRequests r WHERE r.requestID=?";
+			PreparedStatement stmt2 = con.prepareStatement(getReciever);
+			stmt2.setString(1,requestID);
+			ResultSet result2 = stmt2.executeQuery();
+			result2.next();
+			String receiver = result2.getString("reciever");
+			
+			
+			
+			String subject = "Ride Request : "+requestID+" Accepted by driver "+ driverUsername;
+			String message = "Thank you for choosing our service! Your ride request "+requestID+" will be completed by "+driverUsername+". See you then and be sure to leave a comment and rating about your driver";
+	
+			if(driverUsername.isEmpty() | receiver.isEmpty()){
+				con.close();
+			}
+			
+			//Make an insert statement for the Sells table:
+			String insert = "INSERT INTO Emails(timeSent, sender, subject, message, receiver)"
+					+ "VALUES (?,?,?,?,?)";
+			//PreparedStatement deleter = con.prepareStatement("DELETE FROM Emails WHERE sender='admin' ");
+			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+			PreparedStatement ps2 = con.prepareStatement(insert);
+		
+			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+			ps2.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			ps2.setString(2, driverUsername);
+			ps2.setString(3, subject);
+			ps2.setString(4, message);
+			ps2.setString(5, receiver);
+			
+			ps2.executeUpdate();
+
+			
+			
 			//close the connection
 			con.close();
-			response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
-
+			response.sendRedirect(request.getContextPath() + "/inbox.jsp");
 %>
 </body>
 </html>

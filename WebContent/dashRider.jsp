@@ -13,6 +13,10 @@ Welcome <%
 out.print((String) session.getAttribute("UserName"));
 %>
 <br>
+<form method="get" action="inbox.jsp" enctype=text/plain>
+  <input type="submit" value="inbox">
+</form>
+<br>
 	<form method="post" action="<%=request.getContextPath()%>/Workers/addRequest.jsp">
 	<table>
 	<tr>    
@@ -110,5 +114,56 @@ out.print((String) session.getAttribute("UserName"));
 		}
 	%>
 </table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2 align="left"><font color="0000FF"><strong>Completed Rides</strong></font></h2>
+				<table align="left" cellpadding = "4" cellspacing = "4" border = "4">
+				<tr>
+				</tr>
+				<tr>
+				<TH><b>Request ID</b></th>
+				<TH><b>Departure Time</b></th>
+				<th><b>Date</b></th>
+				<th><b>From Lot#</b></th>
+				<th><b>To Lot# </b></th>
+				<th><b>Driver Username </b></th>
+	
+				</tr>
+
+	<%
+	
+	PreparedStatement statement3 = null;
+	
+	   java.util.Date dNow = new java.util.Date();
+	   java.text.SimpleDateFormat ft = 
+	   new java.text.SimpleDateFormat ("yyyy-MM-dd");
+	   ft.format(dNow);	
+		
+	statement3 = con.prepareStatement("SELECT rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=? AND rq.date<=?");
+
+	statement3.setString(1,(String) session.getAttribute("UserName"));
+	statement3.setString(2,ft.toString());
+
+	ResultSet resultSet3 = statement3.executeQuery();
+	while (resultSet3.next()) {
+		%>
+			<tr bgcolor="#56A5EC">
+			<td><%=resultSet3.getInt("requestID")%></td>
+			<td><%=resultSet3.getString("time")%></td>
+			<td><%=resultSet3.getString("Date")%></td>
+			<td><%=resultSet3.getInt("FromLot")%></td>
+			<td><%=resultSet3.getInt("ToLot")%></td>
+			<td><%=resultSet3.getString("driverUsername")%></td>
+			</tr>			
+			
+		<%
+		}
+	%>
+</table>
+
 </body>
 </html>

@@ -13,6 +13,7 @@ Welcome <%
 
 out.print((String) session.getAttribute("UserName"));
 %>
+<br>
 <form method="get" action="inbox.jsp" enctype=text/plain>
   <input type="submit" value="inbox">
 </form>
