@@ -96,7 +96,9 @@ Administrator / Support Console
 <input type="submit" value="View Banned Users" style="height:50px; width:254px" >
 </form>
 </td>
-<td><input type="submit" name="order" value="View Statistics" style="height:50px; width:254px"></td>
+<td><form method="get" action="statistics.jsp" enctype=text/plain>
+<input type="submit" value="View Statistics" style="height:50px; width:254px" >
+</form></td>
 <td><input type="submit" name="order" value="View Advertisements" style="height:50px; width:254px" ></td>
 <td>
 <form method="get" action="inbox.jsp" enctype=text/plain>
