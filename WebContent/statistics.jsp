@@ -29,6 +29,8 @@ Ride Statistics
 	java.text.SimpleDateFormat dateF = new java.text.SimpleDateFormat("yyyy-MM-dd");
 	java.text.SimpleDateFormat timeF = new java.text.SimpleDateFormat("HH:mm:ss");
 	Calendar cal = Calendar.getInstance();
+	Calendar cur_cal = Calendar.getInstance();
+	
 	
 	/*
    	cal.add(Calendar.DATE, -5);
@@ -57,13 +59,14 @@ Ride Statistics
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
 		Connection con = DriverManager.getConnection(url, "keyujin", "password");
-		String SQL = "SELECT COUNT(*) AS count FROM RideOffers WHERE date >= ?";
+		String SQL = "SELECT COUNT(*) AS count FROM RideOffers WHERE date >= ? AND date <= ?";
 		PreparedStatement ps = null;
 		ps = con.prepareStatement(SQL);
 		
 		//last year
 		cal.add(Calendar.YEAR, -1);
 		ps.setString(1, dateF.format(cal.getTime()));
+		ps.setString(2, dateF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs1 = ps.executeQuery();
 		rs1.next();
@@ -73,6 +76,7 @@ Ride Statistics
 		cal.add(Calendar.YEAR,1);
 		cal.add(Calendar.MONTH,-5);
 		ps.setString(1, dateF.format(cal.getTime()));
+		ps.setString(2, dateF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs2 = ps.executeQuery();
 		rs2.next();
@@ -82,6 +86,7 @@ Ride Statistics
 		cal.add(Calendar.MONTH,5);
 		cal.add(Calendar.MONTH,-1);
 		ps.setString(1, dateF.format(cal.getTime()));
+		ps.setString(2, dateF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs3 = ps.executeQuery();
 		rs3.next();
@@ -91,14 +96,15 @@ Ride Statistics
 		cal.add(Calendar.MONTH,1);
 		cal.add(Calendar.DATE, -7);
 		ps.setString(1, dateF.format(cal.getTime()));
+		ps.setString(2, dateF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs4 = ps.executeQuery();
 		rs4.next();
-		int wCount = rs5.getInt("count");
+		int wCount = rs4.getInt("count");
 		
 		
 		
-		SQL = "SELECT COUNT(*) AS COUNT FROM RideOffers WHERE date >= ? AND timeTo >= ?";
+		SQL = "SELECT COUNT(*) AS COUNT FROM RideOffers WHERE date >= ? AND timeTo >= ? AND date <= ? AND timeTo <= ?";
 		ps = null;
 		ps = con.prepareStatement(SQL);
 		
@@ -107,6 +113,8 @@ Ride Statistics
 		cal.add(Calendar.HOUR_OF_DAY, -24);
 		ps.setString(1, dateF.format(cal.getTime()));
 		ps.setString(2, timeF.format(cal.getTime()));
+		ps.setString(3, dateF.format(cur_cal.getTime()));
+		ps.setString(4, timeF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs5 = ps.executeQuery();
 		rs5.next();
@@ -117,12 +125,22 @@ Ride Statistics
 		cal.add(Calendar.HOUR_OF_DAY, -6);
 		ps.setString(1, dateF.format(cal.getTime()));
 		ps.setString(2, timeF.format(cal.getTime()));
+		ps.setString(3, dateF.format(cur_cal.getTime()));
+		ps.setString(4, timeF.format(cur_cal.getTime()));
 		System.out.println("Query: " + ps);
 		ResultSet rs6 = ps.executeQuery();
 		rs6.next();
 		int tCount = rs6.getInt("count");
-		
-		
+		%>
+		<tr>
+			<td><%=yCount%> </td>
+			<td><%=sCount%></td>
+			<td><%=mCount%></td>
+			<td><%=wCount%></td>
+			<td><%=dCount%></td>
+			<td><%=tCount%></td>
+		</tr>
+		<%
 		
 	}catch(Exception e){
 		
