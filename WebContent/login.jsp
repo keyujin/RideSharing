@@ -10,25 +10,40 @@
 <title>Account Login</title>
 </head>
 <body>
+<script type = "text/javascript">
+function validInput(){
+	if(document.getElementById("loginForm").elements.item(0).value == ""){
+		alert ("Please enter your username.");
+		return false;
+	}
+	if(document.getElementById("loginForm").elements.item(1).value == ""){
+		alert( "Please enter your password.");
+		return false;
+	}
+	return true;
+}
+</script>
 <font size = "+2">
 Please Input Your Credentials:
 </font>
 <br>
 <br>
-	<font size="+1">
-	<form method="post" action="Workers/loginCheck.jsp">
-	<table>
-	<tr>    
-	<td>Username</td><td><input type="text" name="username" style="height:24px; width:200px"></td>
-	</tr>
-	<tr>
-	<td>Password</td><td><input type="password" name="password" style="height:24px; width:200px"></td>
-	</tr>
-	</table>
-	<br>
-	<input type="submit" value="Submit" style="height:35px; width:300px">
-	</form>
-	</font>
+<font size="+1">
+<form id="loginForm" method="post" onsubmit="return validInput();" action="Workers/loginCheck.jsp">
+<table>
+<tr>    
+<td>Username</td><td><input type="text" name="username" style="height:24px; width:200px"></td>
+</tr>
+<tr>
+<td>Password</td><td><input type="password" name="password" style="height:24px; width:200px"></td>
+</tr>
+</table>
+<br>
+<input type="submit" value="Submit" style="height:35px; width:300px">
+</form>
+</font>
+
+
 <br>
 <form method="get" action="createAccount.jsp" enctype=text/plain>
   <input type="submit" value="Create New Account" style="height:35px; width:300px">

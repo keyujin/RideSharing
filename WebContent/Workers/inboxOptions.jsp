@@ -15,7 +15,7 @@ String order = request.getParameter("order");
 //out.print(order);
 String id = request.getParameter("id");
 if(id == null){
-	//return to inbox
+	response.sendRedirect(request.getContextPath());
 }
 int num = Integer.parseInt(id);
 %>
@@ -39,12 +39,11 @@ try
 	while(resultSet.next())
 	{
 		if(i == num){
-%>
-			<%timeSent = resultSet.getTimestamp("timeSent");%>
-			<%sender = resultSet.getString("sender");%>
-			<%subject = resultSet.getString("subject");%>
-			<%message =resultSet.getString("message");%>
-<%
+			timeSent = resultSet.getTimestamp("timeSent");
+			sender = resultSet.getString("sender");
+			subject = resultSet.getString("subject");
+			message =resultSet.getString("message");
+			break;
 		}
 		i++; 
 	}
@@ -74,20 +73,20 @@ if(new String("Expand Message").equals(order)){
 		</form>
 	<%
 }else if(new String("Delete Message").equals(order)){
-	try{
-		Class.forName("com.mysql.jdbc.Driver");
-		String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
-		Connection con = DriverManager.getConnection(url, "keyujin", "password");
-		PreparedStatement ps = con.prepareStatement(
-				"DELETE FROM Emails WHERE sender LIKE '" + sender
-				+ "' AND timeSent='" + timeSent + "'"
-				);
-		ps.executeUpdate();
-		con.close();
-		response.sendRedirect(request.getContextPath()+"/inbox.jsp");
-	}catch(Exception e){
-		response.sendRedirect(request.getContextPath()+"/inbox.jsp");
-	}
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+			Connection con = DriverManager.getConnection(url, "keyujin", "password");
+			PreparedStatement ps = con.prepareStatement(
+					"DELETE FROM Emails WHERE sender LIKE '" + sender
+					+ "' AND timeSent='" + timeSent + "'"
+					);
+			ps.executeUpdate();
+			con.close();
+			response.sendRedirect(request.getContextPath()+"/inbox.jsp");
+		}catch(Exception e){
+			response.sendRedirect(request.getContextPath()+"/inbox.jsp");
+		}
 }else if(new String("Forward Message").equals(order)){
 	try{
 		Class.forName("com.mysql.jdbc.Driver");

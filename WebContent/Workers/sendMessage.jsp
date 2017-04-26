@@ -38,6 +38,7 @@ try {
 	ps.setString(4, message);
 	ps.setString(5, receiver);
 	
+	ps.close();
 	ps.executeUpdate();
 	//deleter.executeUpdate();
 	

@@ -10,7 +10,7 @@
 <body>
 <% 
 String cur_user = (String) session.getAttribute("UserName");
-if(cur_user == null){response.sendRedirect(request.getContextPath());}
+if(cur_user == null){response.sendRedirect(request.getContextPath()); return;}
 %>
 
 <table>
