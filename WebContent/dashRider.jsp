@@ -82,6 +82,7 @@ out.print((String) session.getAttribute("UserName"));
 				<tr>
 				</tr>
 				<tr>
+				<TH><b>Offer ID</b></th>
 				<TH><b>Request ID</b></th>
 				<TH><b>Departure Time</b></th>
 				<th><b>Date</b></th>
@@ -95,13 +96,14 @@ out.print((String) session.getAttribute("UserName"));
 	PreparedStatement statement2 = null;
 	
 	
-	statement2 = con.prepareStatement("SELECT rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=?");
+	statement2 = con.prepareStatement("SELECT ro.offerID,rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=?");
 
 	statement2.setString(1,(String) session.getAttribute("UserName"));
 	ResultSet resultSet2 = statement2.executeQuery();
 	while (resultSet2.next()) {
 		%>
 			<tr bgcolor="#56A5EC">
+			<td><%=resultSet2.getInt("offerID")%></td>
 			<td><%=resultSet2.getInt("requestID")%></td>
 			<td><%=resultSet2.getString("time")%></td>
 			<td><%=resultSet2.getString("Date")%></td>
@@ -125,6 +127,7 @@ out.print((String) session.getAttribute("UserName"));
 				<tr>
 				</tr>
 				<tr>
+				<TH><b>Offer ID</b></th>
 				<TH><b>Request ID</b></th>
 				<TH><b>Departure Time</b></th>
 				<th><b>Date</b></th>
@@ -143,7 +146,7 @@ out.print((String) session.getAttribute("UserName"));
 	   new java.text.SimpleDateFormat ("yyyy-MM-dd");
 	   ft.format(dNow);	
 		
-	statement3 = con.prepareStatement("SELECT rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=? AND rq.date<=?");
+	statement3 = con.prepareStatement("SELECT ro.offerID, rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=? AND rq.date<=?");
 
 	statement3.setString(1,(String) session.getAttribute("UserName"));
 	statement3.setString(2,ft.toString());
@@ -152,6 +155,7 @@ out.print((String) session.getAttribute("UserName"));
 	while (resultSet3.next()) {
 		%>
 			<tr bgcolor="#56A5EC">
+			<td><%=resultSet3.getInt("offerID")%></td>
 			<td><%=resultSet3.getInt("requestID")%></td>
 			<td><%=resultSet3.getString("time")%></td>
 			<td><%=resultSet3.getString("Date")%></td>
@@ -164,6 +168,30 @@ out.print((String) session.getAttribute("UserName"));
 		}
 	%>
 </table>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2 ><font color="0000FF"><strong>Leave Rating</strong></font></h2>
+	<form  method="post" action="<%=request.getContextPath()%>/Workers/updateRating.jsp">
+	<table>
+	<tr>    
+	<td>Driver Username:</td><td><input type="text" name="driverUsername"></td><td>*</td>
+	</tr>
+	<tr>
+	<td>Rating (1-5): </td><td>
+	<select name="rating" id = "rating" size=1>
+		<option selected value = 1>1</option>
+		<option value= 2>2</option>
+		<option value= 3>3</option>
+		<option value= 4>4</option>
+		<option value= 5>5</option>
+	</select>&nbsp;<br></td><td>*</td>
+	</tr>
+	</table>
+	<input type="submit" value="Rate!">
+	</form>
 </body>
 </html>

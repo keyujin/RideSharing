@@ -14,6 +14,22 @@ Welcome <%
 out.print((String) session.getAttribute("UserName"));
 %>
 <br>
+Current Rating is: <%
+String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
+Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection(url, "keyujin", "password");
+
+String getCurrentRating = "SELECT u.rating as curRating FROM UserTable u WHERE u.username=?";
+PreparedStatement stmt2 = con.prepareStatement(getCurrentRating);
+stmt2.setString(1,(String) session.getAttribute("UserName"));
+ResultSet result2 = stmt2.executeQuery();
+result2.next();
+double curRating = result2.getDouble("curRating");
+
+out.print(curRating);
+%>
+<br>
 <form method="get" action="inbox.jsp" enctype=text/plain>
   <input type="submit" value="inbox">
 </form>
@@ -64,11 +80,6 @@ out.print((String) session.getAttribute("UserName"));
 				</tr>
 	<%
 	
-	String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
-	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection con = DriverManager.getConnection(url, "keyujin", "password");
-			
 	PreparedStatement statement = null;
 	
 	
