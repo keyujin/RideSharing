@@ -16,16 +16,16 @@ out.print((String) session.getAttribute("UserName"));
 	<form method="post" action="<%=request.getContextPath()%>/Workers/addRequest.jsp">
 	<table>
 	<tr>    
-	<td>Departure Time</td><td><input type="text" name="time"></td>
+	<td>Departure Time: (00:00:00 )</td><td><input type="text" name="time"></td>
 	</tr>
 	<tr>
-	<td>Date</td><td><input type="text" name="date"></td>
+	<td>Date:(YYYY-MM-DD) </td><td><input type="text" name="date"></td>
 	</tr>
 	<tr>
-	<td>From Lot</td><td><input type="text" name="fromLot#"></td>
+	<td>From Lot: </td><td><input type="text" name="fromLot#"></td>
 	</tr>
 	<tr>
-	<td>To Lot</td><td><input type="text" name="toLot#"></td>
+	<td>To Lot: </td><td><input type="text" name="toLot#"></td>
 	</tr>
 	</table>
 	<input type="submit" value="Add Request">
@@ -53,7 +53,7 @@ out.print((String) session.getAttribute("UserName"));
 	PreparedStatement statement = null;
 	
 	
-	statement = con.prepareStatement("SELECT * FROM RideRequests r Where r.riderUsername='"+(String) session.getAttribute("UserName")+"'");
+	statement = con.prepareStatement("SELECT * FROM RideRequests r Where r.RideAccepted=0 AND r.riderUsername='"+(String) session.getAttribute("UserName")+"'");
 
 	ResultSet resultSet = statement.executeQuery();
 	while (resultSet.next()) {
@@ -68,6 +68,47 @@ out.print((String) session.getAttribute("UserName"));
 	<%
 	}
 %>
+</table>
+<br>
+<br>
+<br>
+<br>
+<h2 align="left"><font color="0000FF"><strong>Scheduled Rides</strong></font></h2>
+				<table align="left" cellpadding = "4" cellspacing = "4" border = "4">
+				<tr>
+				</tr>
+				<tr>
+				<TH><b>Request ID</b></th>
+				<TH><b>Departure Time</b></th>
+				<th><b>Date</b></th>
+				<th><b>From Lot#</b></th>
+				<th><b>To Lot# </b></th>
+				<th><b>Driver Username </b></th>
+		
+				</tr>
+
+	<%
+	PreparedStatement statement2 = null;
+	
+	
+	statement2 = con.prepareStatement("SELECT rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=?");
+
+	statement2.setString(1,(String) session.getAttribute("UserName"));
+	ResultSet resultSet2 = statement2.executeQuery();
+	while (resultSet2.next()) {
+		%>
+			<tr bgcolor="#56A5EC">
+			<td><%=resultSet2.getInt("requestID")%></td>
+			<td><%=resultSet2.getString("time")%></td>
+			<td><%=resultSet2.getString("Date")%></td>
+			<td><%=resultSet2.getInt("FromLot")%></td>
+			<td><%=resultSet2.getInt("ToLot")%></td>
+			<td><%=resultSet2.getString("driverUsername")%></td>
+			</tr>			
+			
+		<%
+		}
+	%>
 </table>
 </body>
 </html>
