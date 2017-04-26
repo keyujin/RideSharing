@@ -23,6 +23,11 @@ function validInput(){
 	return true;
 }
 </script>
+<table><tr><td>
+<a href="https://www.reddit.com/r/Overwatch/"><img src="<%=request.getContextPath()%>/images/ow1.jpg" width="290" height="121"/></a>
+
+
+</td></tr></table>
 <font size = "+2">
 Please Input Your Credentials:
 </font>

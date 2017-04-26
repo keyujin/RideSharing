@@ -37,7 +37,7 @@ if(cur_user == null){response.sendRedirect(request.getContextPath()); return;}
 </table>
 <form method="post" action="Workers/inboxOptions.jsp">
 <br>
-<table border="5" cellpadding = "10" id="mytab1">
+<table border="5" cellpadding = "10" id="mytab1" style="width:650px">
 <tr id = "A1">
 	<td> Date/Time Sent </td>
 	<td> Sender </td>

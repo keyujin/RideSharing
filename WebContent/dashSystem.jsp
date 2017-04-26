@@ -106,8 +106,8 @@ Administrator / Support Console
 </tr>
 <tr>
 <td>
-<form method="get" onsubmit="return checkAccess();" action="inbox.jsp" enctype=text/plain>
-<input type="submit" value="Create Support Account*" style="height:50px; width:254px" >
+<form method="get" onsubmit="return checkAccess();" action="createAccount.jsp" enctype=text/plain>
+<input type="submit" name = "order" value="Create Support Account*" style="height:50px; width:254px" >
 </form>
 </td>
 <td>

@@ -11,7 +11,10 @@
 </head>
 <body>
 Please enter your details below (Required Fields Marked *):
-
+<% String svalid = (String) request.getParameter("order");
+if(svalid == null){ svalid = "NOT";}
+if(!svalid.equals("Create Support Account*")){
+%>
 <br>
 	<form method="post" action="Workers/makeAccount.jsp">
 	<table>
@@ -51,6 +54,47 @@ Please enter your details below (Required Fields Marked *):
 	<input type="submit" value="Create Account">
 	</form>
 <br>
-
+<% }else{	%>
+<br>
+	<form method="post" action="Workers/makeAccount.jsp">
+	<table>
+	<tr>    
+	<td>Support Username:</td><td><input type="text" name="username"></td><td>*</td>
+	</tr>
+	<tr>
+	<td>Password: </td><td><input type="text" name="password"></td><td>*</td>
+	</tr>
+	<tr>    
+	<td>Full Name: </td><td><input type="text" name="fullName"></td><td>*</td>
+	</tr>
+	<tr>    
+	<td>Email Address: </td><td><input type="text" name="email"></td><td>*</td>
+	</tr>
+	<tr>    
+	<td>Address: </td><td><input type="text" name="address"></td>
+	</tr>
+	<tr>    
+	<td>City: </td><td><input type="text" name="city"></td>
+	</tr>
+	<tr>    
+	<td>Zip Code: </td><td><input type="text" name="zipCode"></td>
+	</tr>
+	<tr>    
+	<td>Phone Number: </td><td><input type="text" name="phoneNumber"></td><td>*</td>
+	</tr>
+	<tr>
+	<td>Account Type: </td><td>
+	<select name="userType" id = "userType" size=1 disabled>
+		<option selected value = "2">Support</option>
+	</select>&nbsp;<br></td><td>*</td>
+	</tr>
+	</table>
+	<br>
+	<input type="submit" value="Create Account">
+	</form>
+<br>
+<%
+}
+%>
 </body>
 </html>

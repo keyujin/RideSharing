@@ -70,6 +70,7 @@ if(new String("Manual Ban").equals(order)){
 		if(countMatches == 1){
 			System.out.println("error: target already banned");
 			response.sendRedirect(request.getContextPath()+"/dashSystem.jsp");
+			return;
 		}
 		stmt.close();
 		con.close();
@@ -111,12 +112,13 @@ if(new String("Manual Ban").equals(order)){
 		Connection con = DriverManager.getConnection(url, "keyujin", "password");
 		
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO Invalidates(username)"
-				+ "VALUES (?)";
+		String insert = "INSERT INTO Reset(username, resetBy)"
+				+ "VALUES (?,?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
 		ps.setString(1, target);
+		ps.setString(2, cur_user);
 		ps.executeUpdate();
 		//close the connection
 		ps.close();

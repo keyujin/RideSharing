@@ -10,32 +10,43 @@
 <title>New Password</title>
 </head>
 <body>
+<% String userId = (String) session.getAttribute("UserName"); %>
+<script type = "text/javascript">
+function validInput(){
+	if(document.getElementById("newPassForm").elements.item(1).value == ""){
+		alert ("Please enter your new password.");
+		return false;
+	}
+	if(document.getElementById("newPassForm").elements.item(2).value == ""){
+		alert( "Please re-enter your new password.");
+		return false;
+	}
+	if(document.getElementById("newPassForm").elements.item(1).value != document.getElementById("newPassForm").elements.item(2).value){
+		alert( "Passwords Don't Match.");
+		return false;
+	}
+	return true;
+}
+</script>
 <font size = "+2">
 Please Enter a New Password:
 </font>
-<br>
-<br>
-	<font size="+1">
-	<form method="post" action="Workers/loginCheck.jsp">
+<font size="+1">
+	<form id="newPassForm" onsubmit="return validInput()" method="post" action="Workers/changePassword.jsp">
 	<table>
-	<tr>    
-	<td>Password</td><td><input type="text" name="username" style="height:24px; width:200px"></td>
+	<tr>
+	<td>Username: </td><td><input type="text" name="username" value=<%=userId%> style="height:24px; width:210px" disabled></td>
+	</tr>
+	<tr> 
+	<td>Password: </td><td><input type="text" name="password" style="height:24px; width:210px"></td>
 	</tr>
 	<tr>
-	<td>Re-enter</td><td><input type="password" name="password" style="height:24px; width:200px"></td>
+	<td>Re-enter: </td><td><input type="text" name="password2" style="height:24px; width:210px"></td>
 	</tr>
 	</table>
 	<br>
 	<input type="submit" value="Submit" style="height:35px; width:300px">
 	</form>
-	</font>
-<br>
-<form method="get" action="createAccount.jsp" enctype=text/plain>
-  <input type="submit" value="Create New Account" style="height:35px; width:300px">
-</form>
-<br>
-<form method="get" action="forgotAccount.jsp" enctype=text/plain>
-  <input type="submit" value="Forgot Password?" style="height:35px; width:300px">
-</form>
+</font>
 </body>
 </html>
