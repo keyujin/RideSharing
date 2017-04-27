@@ -8,41 +8,69 @@
 </head>
 <body>
 <%
-		try {
+String fromLot = request.getParameter("fromLot#");
+String toLot = request.getParameter("toLot#");
+if(fromLot.equals(toLot)){
+	System.out.println("error: identical lots");
+	response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
+	return;
+}
+try{
+	String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection con = DriverManager.getConnection(url, "keyujin", "password");
+	String search = "SELECT COUNT(*) AS count FROM Lots WHERE lotName LIKE ?";
+	PreparedStatement sps = con.prepareStatement(search);
+	sps.setString(1, fromLot);
+	ResultSet rsFrom = sps.executeQuery();
+	rsFrom.next();
+	int fromCount = rsFrom.getInt("count");
+	sps.setString(1, toLot);
+	ResultSet rsTo = sps.executeQuery();
+	rsTo.next();
+	int toCount = rsTo.getInt("count");
+	if(toCount != 1 || fromCount != 1){ 
+		System.out.println("Error: Invalid Lots"); 
+		response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
+		return;
+	}
+	con.close();
+	sps.close();
+}catch (Exception e) {
+	out.print("insert failed");
+}
+try {
+	String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection con = DriverManager.getConnection(url, "keyujin", "password");
+	
+	String time = request.getParameter("time");
+	String date = request.getParameter("date");
+	String riderUsername = (String)session.getAttribute("UserName");
 
-			String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
-			//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url, "keyujin", "password");
-					
-			String time = request.getParameter("time");
-			String date = request.getParameter("date");
-			String fromLot = request.getParameter("fromLot#");
-			String toLot = request.getParameter("toLot#");
-			String riderUsername = (String)session.getAttribute("UserName");
 
+	//Make an insert statement for the Sells table:
+	String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)" + "VALUES (?,?,?,?,?)";
+	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+	PreparedStatement ps = con.prepareStatement(insert);
 
-			//Make an insert statement for the Sells table:
-			String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)"
-					+ "VALUES (?,?,?,?,?)";
-			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-			PreparedStatement ps = con.prepareStatement(insert);
+	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+	ps.setString(1, time);
+	ps.setString(2, date);
+	ps.setString(3, fromLot);
+	ps.setString(4, toLot);
+	ps.setString(5, riderUsername);
 
-			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-			ps.setString(1, time);
-			ps.setString(2, date);
-			ps.setString(3, fromLot);
-			ps.setString(4, toLot);
-			ps.setString(5, riderUsername);
-
-			//Run the query against the DB
-			ps.executeUpdate();
-			//close the connection
-			con.close();
-			 response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
+	//Run the query against the DB
+	ps.executeUpdate();
+	//close the connection
+	con.close();
+	response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 } catch (Exception e) {
-			out.print("insert failed");
-		}
+	out.print("insert failed2");
+}
 %>
 </body>
 </html>
