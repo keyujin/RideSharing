@@ -25,11 +25,16 @@
 			String numPass = request.getParameter("numPass");
 
 			String recurring = request.getParameter("recurring");
+			String often = request.getParameter("numOften");
+
 			String driverUsername = (String)session.getAttribute("UserName");
 
+			int numOften = 0;
 			int recurringVal = Integer.parseInt(recurring);
-
-			
+			if(!often.equals("")){
+				numOften = Integer.parseInt(often);
+			}
+		
 			String insert = "INSERT INTO RideOffers(timeFrom,timeTo,date,fromLot,toLot,driverUsername,numPassengers,recurring)"
 					+ "VALUES (?,?,?,?,?,?,?,?)";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
@@ -52,8 +57,33 @@
 			ps.executeUpdate();
 			
 			int i=0;
+			if(recurringVal!=0){
 			if(recurringVal==1){
-				while(i<3){
+				while(i<numOften-1){
+					java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
+					java.util.Date startDate = df.parse(date);
+					out.println(startDate);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(startDate);
+					cal.add(Calendar.DATE, +1);
+					
+					ps.setString(1, timeFrom);
+					ps.setString(2, timeTo);
+					ps.setString(3, df.format(cal.getTime()));
+					ps.setString(4, fromLot);
+					ps.setString(5, toLot);
+					ps.setString(6, driverUsername);
+					ps.setString(7, numPass);
+					ps.setString(8, recurring);
+
+					//Run the query against the DB
+					
+					date = df.format(cal.getTime());
+					ps.executeUpdate();
+					i++;
+				}
+			}else if(recurringVal==2){
+				while(i<numOften-1){
 					java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
 					java.util.Date startDate = df.parse(date);
 					out.println(startDate);
@@ -76,8 +106,8 @@
 					ps.executeUpdate();
 					i++;
 				}
-			}else if(recurringVal==2){
-				while(i<=6){
+			}else if(recurringVal==3){
+				while(i<numOften-1){
 					java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
 					java.util.Date startDate = df.parse(date);
 					out.println(startDate);
@@ -101,7 +131,7 @@
 					i++;
 				}
 			}
-			
+			}
 			//close the connection
 			con.close();
 			out.print("insert succeded");

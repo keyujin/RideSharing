@@ -46,24 +46,52 @@ out.print(curRating);
 	<td>Date: (YYYY-MM-DD)</td><td><input type="text" name="date"></td>
 	</tr>
 	<tr>
-	<td>From Lot:</td><td><input type="text" name="fromLot#"></td>
+	<%
+	try{
+	//	Class.forName("com.mysql.jdbc.Driver");
+		//String url0="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+		//Connection con0 = DriverManager.getConnection(url0, "keyujin", "password");
+		Statement findLots = con.createStatement();
+		ResultSet allLots = findLots.executeQuery("SELECT lotName FROM Lots");
+	%>
+	<td>From Lot: </td>
+	<td>
+	<select name="fromLot#" size=1>
+		<% while(allLots.next()) {%>
+		<option><%=allLots.getString("lotName")%></option>
+		<% }  %>
+	</select>&nbsp;<br></td>
 	</tr>
 	<tr>
-	<td>To Lot:</td><td><input type="text" name="toLot#"></td>
+	<%
+		allLots = findLots.executeQuery("SELECT lotName FROM Lots");
+	%>
+	<td>To Lot: </td><td>
+	<select name="toLot#" size=1>
+		<% while(allLots.next()) {%>
+		<option><%=allLots.getString("lotName")%></option>
+		<% }  %>
+	</select>&nbsp;<br></td>
 	</tr>
+	<%}catch(Exception e){ out.println("error"); } %>
 	<tr>
 	<td>Number of Passengers:</td><td><input type="text" name="numPass"></td>
 	</tr>
 	</table>
 	<br>
 	Recurring?
-	<select name="recurring" id = "recurring" size=1>
+	<select name="recurring" size=1>
 		<option value=0>No</option>
-		<option value=1>Every Week (NEXT 4 WEEKS)</option>
-		<option value=2>Every Month (NEXT 6 MONTHS)</option>
-		
+		<option value=1>Every Day</option>
+		<option value=2>Every Week </option>
+		<option value=3>Every Month</option>
 	</select>&nbsp;<br>
 	<br>
+<table>
+<tr>
+	<td>How Often? Every:</td><td><input type="text" name="numOften"> days/weeks/months</td>
+	</tr>
+	</table>
 	<input type="submit" value="Add Offer">
 	</form>
 <br>

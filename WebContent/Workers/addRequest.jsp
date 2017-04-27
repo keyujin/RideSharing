@@ -49,25 +49,107 @@ try {
 	String time = request.getParameter("time");
 	String date = request.getParameter("date");
 	String riderUsername = (String)session.getAttribute("UserName");
+	String recurring = request.getParameter("recurring");
+	String often = request.getParameter("numOften");
+	int numOften = 0;
+	int recurringVal = Integer.parseInt(recurring);
+	if(!often.equals("")){
+		numOften = Integer.parseInt(often);
+	}
+	
+	if(numOften==0){
+		//Make an insert statement for the Sells table:
+		String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)" + "VALUES (?,?,?,?,?)";
+		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+		PreparedStatement ps = con.prepareStatement(insert);
+	
+		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+		ps.setString(1, time);
+		ps.setString(2, date);
+		ps.setString(3, fromLot);
+		ps.setString(4, toLot);
+		ps.setString(5, riderUsername);
+	
+		//Run the query against the DB
+		ps.executeUpdate();
+		//close the connection
+		con.close();
+		response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
+	}else{
+		if(recurringVal==1){
+			while(i<numOften-1){
+				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
+				java.util.Date startDate = df.parse(date);
+				out.println(startDate);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(startDate);
+				cal.add(Calendar.DATE, +1);
+				
+				
+				ps.setString(1, time);
+				ps.setString(2, df.format(cal.getTime()));
+				ps.setString(3, fromLot);
+				ps.setString(4, toLot);
+				ps.setString(5, riderUsername);
+			
+				
+				//Run the query against the DB
+				
+				date = df.format(cal.getTime());
+				ps.executeUpdate();
+				i++;
+			}
+		}else if(recurringVal==2){
+			while(i<numOften-1){
+				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
+				java.util.Date startDate = df.parse(date);
+				out.println(startDate);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(startDate);
+				cal.add(Calendar.DATE, +7);
+				
+				ps.setString(1, time);
+				ps.setString(2, df.format(cal.getTime()));
+				ps.setString(3, fromLot);
+				ps.setString(4, toLot);
+				ps.setString(5, riderUsername);
+			
+				//Run the query against the DB
+				
+				date = df.format(cal.getTime());
+				ps.executeUpdate();
+				i++;
+			}
+		}else if(recurringVal==3){
+			while(i<numOften-1){
+				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
+				java.util.Date startDate = df.parse(date);
+				out.println(startDate);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(startDate);
+				cal.add(Calendar.MONTH, +1);
+				
+				ps.setString(1, time);
+				ps.setString(2, df.format(cal.getTime()));
+				ps.setString(3, fromLot);
+				ps.setString(4, toLot);
+				ps.setString(5, riderUsername);
+			
+				//Run the query against the DB
+				
+				date = df.format(cal.getTime());
+				ps.executeUpdate();
+				i++;
+			}
+		}
+		}
+		//close the connection
+		con.close();
+		out.print("insert succeded");
 
-
-	//Make an insert statement for the Sells table:
-	String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)" + "VALUES (?,?,?,?,?)";
-	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-	PreparedStatement ps = con.prepareStatement(insert);
-
-	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-	ps.setString(1, time);
-	ps.setString(2, date);
-	ps.setString(3, fromLot);
-	ps.setString(4, toLot);
-	ps.setString(5, riderUsername);
-
-	//Run the query against the DB
-	ps.executeUpdate();
-	//close the connection
-	con.close();
-	response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
+		response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
+		
+	}
 } catch (Exception e) {
 	out.print("insert failed2");
 }

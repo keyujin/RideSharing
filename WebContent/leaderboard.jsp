@@ -48,5 +48,6 @@
 			e.printStackTrace();
 		}	     
 	%>
+	</table>
 </body>
 </html>

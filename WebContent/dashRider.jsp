@@ -55,6 +55,21 @@ out.print((String) session.getAttribute("UserName"));
 	</tr>
 	<%}catch(Exception e){ out.println("error"); } %>
 	</table>
+	<br>
+	Recurring?
+	<select name="recurring" size=1>
+		<option value=0>No</option>
+		<option value=1>Every Day</option>
+		<option value=2>Every Week </option>
+		<option value=3>Every Month</option>
+	</select>&nbsp;<br>
+	<br>
+<table>
+<tr>
+	<td>How Often? Every:</td><td><input type="text" name="numOften"> days/weeks/months</td>
+	</tr>
+	</table>
+	<input type="submit" value="Add Offer">
 	<input type="submit" value="Add Request">
 	</form>
 <br>
