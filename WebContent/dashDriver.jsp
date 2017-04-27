@@ -57,9 +57,11 @@ out.print(curRating);
 	</table>
 	<br>
 	Recurring?
-	<select name="recurring" size=1>
-		<option value="0">Yes</option>
-		<option value="1">No</option>
+	<select name="recurring" id = "recurring" size=1>
+		<option value=0>No</option>
+		<option value=1>Every Week (NEXT 4 WEEKS)</option>
+		<option value=2>Every Month (NEXT 6 MONTHS)</option>
+		
 	</select>&nbsp;<br>
 	<br>
 	<input type="submit" value="Add Offer">

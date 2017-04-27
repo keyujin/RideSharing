@@ -24,9 +24,11 @@
 	
 			
 		
-			String update = "UPDATE RideRequests Set rideAccepted='1' , driverUsername=? Where requestID=?";
+			String update = "UPDATE RideRequests Set rideAccepted='1', driverUsername=?, offerID=? Where requestID=?";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(update);
+			
+			
 	
 			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
 			ps.setString(1, driverUsername);
@@ -43,8 +45,6 @@
 			ResultSet result2 = stmt2.executeQuery();
 			result2.next();
 			String receiver = result2.getString("reciever");
-			
-			
 			
 			String subject = "Ride Request : "+requestID+" Accepted by driver "+ driverUsername;
 			String message = "Thank you for choosing our service! Your ride request "+requestID+" will be completed by "+driverUsername+". See you then and be sure to leave a comment and rating about your driver";
@@ -68,9 +68,6 @@
 			ps2.setString(5, receiver);
 			
 			ps2.executeUpdate();
-
-			
-			
 			//close the connection
 			con.close();
 			response.sendRedirect(request.getContextPath() + "/inbox.jsp");

@@ -142,8 +142,7 @@ out.print((String) session.getAttribute("UserName"));
 	PreparedStatement statement3 = null;
 	
 	   java.util.Date dNow = new java.util.Date();
-	   java.text.SimpleDateFormat ft = 
-	   new java.text.SimpleDateFormat ("yyyy-MM-dd");
+	   java.text.SimpleDateFormat ft = new java.text.SimpleDateFormat ("yyyy-MM-dd");
 	   ft.format(dNow);	
 		
 	statement3 = con.prepareStatement("SELECT ro.offerID, rq.requestID,rq.driverUsername,rq.time,rq.date,rq.fromLot,rq.toLot FROM RideRequests rq, RideOffers ro WHERE rq.time<=ro.timeTo AND rq.time>=ro.timeFrom AND rq.date=ro.Date AND rq.RideAccepted=1 AND rq.riderUsername=? AND rq.date<=?");
