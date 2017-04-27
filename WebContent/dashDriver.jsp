@@ -27,6 +27,10 @@ ResultSet result2 = stmt2.executeQuery();
 result2.next();
 double curRating = result2.getDouble("curRating");
 
+String adInc = "UPDATE Ads SET AdViews = AdViews + 1 WHERE AdName = 'ram.jpg'";
+PreparedStatement ad = con.prepareStatement(adInc);
+ad.executeUpdate();
+
 out.print(curRating);
 %>
 <br>
@@ -137,7 +141,7 @@ out.print(curRating);
 
 </table>
 
-<br>
+
 <br>
 
 <br>
@@ -185,6 +189,7 @@ out.print(curRating);
 			</tr>			
 			
 		<%
+		con.close();
 		}
 	%>
 </table>
@@ -197,6 +202,11 @@ out.print(curRating);
 <form action = "leaderboard.jsp">
 <br>
 <input type="submit" value="View LeaderBoard" />
+<br>
+
+<table><tr><td>
+<img src="<%=request.getContextPath()%>/images/ram.jpg" width="300" height="400"/>
+</td></tr></table>
 <br>
 </form>
 </body>

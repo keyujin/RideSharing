@@ -25,10 +25,21 @@ function validInput(){
 </script>
 <table><tr><td>
 <a href="https://www.reddit.com/r/Overwatch/"><img src="<%=request.getContextPath()%>/images/ow1.jpg" width="290" height="121"/></a>
-
+<%
+String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
+Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection(url, "keyujin", "password");
+String adInc = "UPDATE Ads SET AdViews = AdViews + 1 WHERE AdName = 'ow1.jpg'";
+PreparedStatement ad = con.prepareStatement(adInc);
+ad.executeUpdate();
+con.close();
+%>
 
 </td></tr></table>
 <font size = "+2">
+
+
 Please Input Your Credentials:
 </font>
 <br>

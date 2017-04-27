@@ -55,6 +55,9 @@ try
 	Statement stmt=con.createStatement();
 	ResultSet resultSet=stmt.executeQuery(sql);
 	Integer i = 0;
+	String adInc = "UPDATE Ads SET AdViews = AdViews + 1 WHERE AdName = 'notepad.png'";
+	PreparedStatement ad = con.prepareStatement(adInc);
+	ad.executeUpdate();
 	while(resultSet.next())
 	{
 %>
@@ -94,5 +97,6 @@ Forward to:
 <input type="submit" name="order" value="Forward Message">
 </form>
 <br/>
+<img src="<%=request.getContextPath()%>/images/notepad.png" width="500" height="200"/>
 </body>
 </html>

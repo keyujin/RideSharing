@@ -11,8 +11,6 @@
 </head>
 <body>
 	<%
-	
-	
 			String url = "jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
 			//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
 			Class.forName("com.mysql.jdbc.Driver");
@@ -54,7 +52,7 @@
 			}
 			
 			String inc = "UPDATE userTable SET ridesGiven = ridesGiven + 1 WHERE username = " + driverUsername;
-			PreparedStatment psInc = con.prepareStatement(inc);
+			PreparedStatement psInc = con.prepareStatement(inc);
 			psInc.executeUpdate();
 			
 			//Make an insert statement for the Sells table:

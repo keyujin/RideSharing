@@ -16,6 +16,7 @@ out.print((String) session.getAttribute("UserName"));
 <form method="get" action="inbox.jsp" enctype=text/plain>
   <input type="submit" value="inbox">
 </form>
+<img src="<%=request.getContextPath()%>/images/ps.png" width="500" height="150"/>
 <br>
 	<form method="post" action="<%=request.getContextPath()%>/Workers/addRequest.jsp">
 	<table>
@@ -33,6 +34,9 @@ out.print((String) session.getAttribute("UserName"));
 		Connection con0 = DriverManager.getConnection(url0, "keyujin", "password");
 		Statement findLots = con0.createStatement();
 		ResultSet allLots = findLots.executeQuery("SELECT lotName FROM Lots");
+		String adInc = "UPDATE Ads SET AdViews = AdViews + 1 WHERE AdName = 'ps.png'";
+		PreparedStatement ad = con0.prepareStatement(adInc);
+		ad.executeUpdate();
 	%>
 	<td>From Lot: </td>
 	<td>
@@ -202,6 +206,7 @@ out.print((String) session.getAttribute("UserName"));
 			</tr>			
 			
 		<%
+		con.close();
 		}
 	%>
 </table>
