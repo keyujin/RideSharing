@@ -26,11 +26,34 @@ out.print((String) session.getAttribute("UserName"));
 	<td>Date:(YYYY-MM-DD) </td><td><input type="text" name="date"></td>
 	</tr>
 	<tr>
-	<td>From Lot: </td><td><input type="text" name="fromLot#"></td>
+	<%
+	try{
+		Class.forName("com.mysql.jdbc.Driver");
+		String url0="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+		Connection con0 = DriverManager.getConnection(url0, "keyujin", "password");
+		Statement findLots = con0.createStatement();
+		ResultSet allLots = findLots.executeQuery("SELECT lotName FROM Lots");
+	%>
+	<td>From Lot: </td>
+	<td>
+	<select name="fromLot#" size=1>
+		<% while(allLots.next()) {%>
+		<option><%=allLots.getString("lotName")%></option>
+		<% }  %>
+	</select>&nbsp;<br></td>
 	</tr>
 	<tr>
-	<td>To Lot: </td><td><input type="text" name="toLot#"></td>
+	<%
+		allLots = findLots.executeQuery("SELECT lotName FROM Lots");
+	%>
+	<td>To Lot: </td><td>
+	<select name="toLot#" size=1>
+		<% while(allLots.next()) {%>
+		<option><%=allLots.getString("lotName")%></option>
+		<% }  %>
+	</select>&nbsp;<br></td>
 	</tr>
+	<%}catch(Exception e){ out.println("error"); } %>
 	</table>
 	<input type="submit" value="Add Request">
 	</form>
