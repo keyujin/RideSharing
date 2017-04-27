@@ -99,10 +99,7 @@ Administrator / Support Console
 <td><form method="get" action="statistics.jsp" enctype=text/plain>
 <input type="submit" value="View Statistics" style="height:50px; width:254px" >
 </form></td>
-<td>
-<form method="get" action="adViews.jsp" enctype=text/plain>
-<input type="submit" name="order" value="View Advertisements" style="height:50px; width:254px" >
-</form></td>
+<td><input type="submit" name="order" value="View Advertisements" style="height:50px; width:254px" ></td>
 <td>
 <form method="get" action="inbox.jsp" enctype=text/plain>
 <input type="submit" value="Inbox" style="height:50px; width:254px" >
@@ -129,7 +126,6 @@ Administrator / Support Console
 <form method="get" action="Workers/logout.jsp" enctype=text/plain>
 <input type="submit" value="Logout" style="height:50px; width:254px" >
 </form>
-
 </td>
 </table>
 </body>
