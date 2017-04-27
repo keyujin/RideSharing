@@ -178,6 +178,7 @@ Ride Statistics
 		</tr>
 		<%
 		}
+		con.close();
 	}catch(Exception e){
 		out.println("something went wrong..2");
 	}

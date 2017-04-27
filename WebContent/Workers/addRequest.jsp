@@ -56,13 +56,15 @@ try {
 	if(!often.equals("")){
 		numOften = Integer.parseInt(often);
 	}
+	String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)" + "VALUES (?,?,?,?,?)";
+	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+	PreparedStatement ps = con.prepareStatement(insert);
+
 	
+	int i=0;
 	if(numOften==0){
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO RideRequests(time,date,fromLot,toLot,riderUsername)" + "VALUES (?,?,?,?,?)";
-		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-		PreparedStatement ps = con.prepareStatement(insert);
-	
+		
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
 		ps.setString(1, time);
 		ps.setString(2, date);
@@ -147,11 +149,10 @@ try {
 		con.close();
 		out.print("insert succeded");
 
-		response.sendRedirect(request.getContextPath()+"/dashDriver.jsp");
+		response.sendRedirect(request.getContextPath()+"/dashRider.jsp");
 		
-	}
-} catch (Exception e) {
-	out.print("insert failed2");
+	}catch (Exception e) {
+	out.print("insert failed");
 }
 %>
 </body>

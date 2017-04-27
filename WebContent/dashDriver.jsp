@@ -128,8 +128,8 @@ out.print(curRating);
 		<td><%=resultSet.getInt("requestID")%></td>
 		<td><%=resultSet.getString("time")%></td>
 		<td><%=resultSet.getString("Date")%></td>
-		<td><%=resultSet.getInt("FromLot")%></td>
-		<td><%=resultSet.getInt("ToLot")%></td>
+		<td><%=resultSet.getString("FromLot")%></td>
+		<td><%=resultSet.getString("ToLot")%></td>
 		<td><%=resultSet.getString("riderUsername")%></td>
 		
 		
@@ -183,8 +183,8 @@ out.print(curRating);
 			<td><%=resultSet2.getInt("requestID")%></td>
 			<td><%=resultSet2.getString("time")%></td>
 			<td><%=resultSet2.getString("Date")%></td>
-			<td><%=resultSet2.getInt("FromLot")%></td>
-			<td><%=resultSet2.getInt("ToLot")%></td>
+			<td><%=resultSet2.getString("FromLot")%></td>
+			<td><%=resultSet2.getString("ToLot")%></td>
 			<td><%=resultSet2.getString("riderUsername")%></td>
 			</tr>			
 			
@@ -209,5 +209,19 @@ out.print(curRating);
 </td></tr></table>
 <br>
 </form>
+<br>
+<br>
+<br>
+
+Report User
+<form  method="post" action="<%=request.getContextPath()%>/Workers/sendReport.jsp">
+	<table>
+	<tr>    
+	<td>Username:</td><td><input type="text" name="offender"></td><td>*</td>
+	</tr>
+	</table>
+	<input type="submit" value="Report User">
+	</form>
+	
 </body>
 </html>
