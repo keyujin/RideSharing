@@ -56,7 +56,12 @@
 			con.close();
 			out.print("insert succeeded");
 		} catch (Exception e) {
-			out.print("insert failed");
+			out.print("Insert failed");
+			%>
+			<br>
+			<form><INPUT Type="button" VALUE="Try Again" onClick="history.go(-1);return true;"></form>
+			<br>
+	<% 
 		}
 	%>
 </body>
