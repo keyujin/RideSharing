@@ -42,10 +42,12 @@ Ride Statistics
    	java.text.SimpleDateFormat ft = new java.text.SimpleDateFormat ("yyyy-MM-dd");
    	System.out.println("test: " + ft.format(cal.getTime()));
    	*/
-   	System.out.println("test2:" + timeF.format(cal.getTime()));
+   	//System.out.println("test2:" + timeF.format(cal.getTime()));
 %>
 <br>
-<table>
+</font>
+
+<table cellspacing="0" cellpadding="1" border="1">
 	<tr>
 		<td> Year </td>
 		<td> Semester </td>
@@ -56,12 +58,14 @@ Ride Statistics
 	</tr>
 	<%
 	try{
+		System.out.println("You are here");
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
 		Connection con = DriverManager.getConnection(url, "keyujin", "password");
-		String SQL = "SELECT COUNT(*) AS count FROM RideOffers WHERE date >= ? AND date <= ?";
+		String SQL = "SELECT COUNT(*) AS count FROM RideRequests WHERE date >= ? AND date <= ? AND driverUsername IS NOT NULL";
 		PreparedStatement ps = null;
 		ps = con.prepareStatement(SQL);
+		System.out.println("You are here");
 		
 		//last year
 		cal.add(Calendar.YEAR, -1);
@@ -104,7 +108,7 @@ Ride Statistics
 		
 		
 		
-		SQL = "SELECT COUNT(*) AS COUNT FROM RideOffers WHERE date >= ? AND timeTo >= ? AND date <= ? AND timeTo <= ?";
+		SQL = "SELECT COUNT(*) AS COUNT FROM RideOffers WHERE date >= ? AND timeTo >= ? AND date <= ? AND timeTo <= ? AND driverUsername IS NOT NULL";
 		ps = null;
 		ps = con.prepareStatement(SQL);
 		
@@ -143,13 +147,41 @@ Ride Statistics
 		<%
 		
 	}catch(Exception e){
-		
+		out.println("something went wrong..");
 	}
-	
-	
-
 	%>
 </table>
-</font>
+<br>
+<br>
+<table cellspacing="0" cellpadding="1" border="1" style="width:800px">
+	<tr>
+		<td> Lot </td>
+		<td> Origin # </td>
+		<td> Destination # </td>
+	</tr>
+	<%
+	try{
+		Class.forName("com.mysql.jdbc.Driver");
+		String url="jdbc:mysql://malcador.canetd0jmani.us-east-2.rds.amazonaws.com:3306/RideShare";
+		Connection con = DriverManager.getConnection(url, "keyujin", "password");
+		String SQL = "SELECT * FROM Lots";
+		PreparedStatement ps = null;
+		ps = con.prepareStatement(SQL);
+		System.out.println(ps);
+		ResultSet lotStats = ps.executeQuery();
+		while(lotStats.next()){
+		%>
+		<tr>
+			<td><%=lotStats.getString("lotName")%> </td>
+			<td><%=lotStats.getInt("origin")%></td>
+			<td><%=lotStats.getInt("destination")%></td>
+		</tr>
+		<%
+		}
+	}catch(Exception e){
+		out.println("something went wrong..2");
+	}
+	%>
+</table>
 </body>
 </html>
