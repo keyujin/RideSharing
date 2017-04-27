@@ -207,7 +207,7 @@ Report User
 <form  method="post" action="<%=request.getContextPath()%>/Workers/sendReport.jsp">
 	<table>
 	<tr>    
-	<td>Username:</td><td><input type="text" name="username"></td><td>*</td>
+	<td>Username:</td><td><input type="text" name="offender"></td><td>*</td>
 	</tr>
 	</table>
 	<input type="submit" value="Report User">

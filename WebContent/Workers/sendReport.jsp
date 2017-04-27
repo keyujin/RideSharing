@@ -17,28 +17,62 @@ try {
 	int access_level = (Integer) session.getAttribute("Access");
 	String target = request.getParameter("offender");
 	
-	//Make an insert statement for the Sells table:
-	String insert = "UPDATE Reports SET timesReported = timesReported + 1 WHERE Aggressor LIKE ?"
-			+ "VALUES (?)";
-	//PreparedStatement deleter = con.prepareStatement("DELETE FROM Emails WHERE sender='admin' ");
-	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-	PreparedStatement ps = con.prepareStatement(insert);
-	ps.setString(1, target);
-	ps.executeUpdate();
-	ps.close();
 	
-	//close the connection
-	con.close();
-	if(access_level == 1){
-		response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
-		return;
+	String str = "SELECT COUNT(Aggressor) AS cnt FROM Reports r WHERE r.Aggressor=?";
+	PreparedStatement stmt = con.prepareStatement(str);
+	stmt.setString(1,target);
+	ResultSet result = stmt.executeQuery();
+	result.next();
+	int countMatches = result.getInt("cnt");
+	
+	out.print(countMatches);
+	if(countMatches==0){
+		String addS = "INSERT INTO Reports(Aggressor,timesReported)"
+				+ "VALUES (?,1)";
+		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+		PreparedStatement add = con.prepareStatement(addS);
+		
+		add.setString(1, target);
+		
+		add.executeUpdate();
+		add.close();
+		if(access_level == 1){
+			response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
+			return;
+		}else{
+			response.sendRedirect(request.getContextPath() + "/dashDriver.jsp");
+			return;
+		}
+		
 	}else{
-		response.sendRedirect(request.getContextPath() + "/dashDriver.jsp");
-		return;
+		//Make an insert statement for the Sells table:
+		String insert = "UPDATE Reports SET timesReported = timesReported + 1 WHERE Aggressor=?";
+		//PreparedStatement deleter = con.prepareStatement("DELETE FROM Emails WHERE sender='admin' ");
+		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+		PreparedStatement ps = con.prepareStatement(insert);
+		ps.setString(1, target);
+		ps.executeUpdate();
+		ps.close();
+		
+		//close the connection
+		con.close();
+		if(access_level == 1){
+			response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
+			return;
+		}else{
+			response.sendRedirect(request.getContextPath() + "/dashDriver.jsp");
+			return;
+		}
 	}
 } catch (Exception e) {
-	response.sendRedirect(request.getContextPath() + "/createMessage.jsp");
-}
+	
+	int access_level = (Integer) session.getAttribute("Access");
+
+	if(access_level == 1){
+		response.sendRedirect(request.getContextPath() + "/dashRider.jsp");
+	}else{
+		response.sendRedirect(request.getContextPath() + "/dashDriver.jsp");
+	}}
 %>
 </body>
 </html>
