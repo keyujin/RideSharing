@@ -39,19 +39,7 @@
 			ps.setString(5, email);
 			ps.setString(6, phoneNumber);
 			
-			ps.executeUpdate();
-		//	String userType = request.getParameter("accounttype");
-			/*
-			//check if user created driver account to be included into the DriverStatistics table
-			if (userType.equals("0")) {
-				out.print(userType);
-				String insertDriver = "INSERT INTO DriverStatistics(Username) VALUES (?)";
-				PreparedStatement psDriver = con.prepareStatement(insertDriver);
-				psDriver.setString(1, user);
-				psDriver.executeUpdate();
-			}
-			*/
-			
+			ps.executeUpdate();	
 			//close the connection
 			con.close();
 			out.print("insert succeeded");
