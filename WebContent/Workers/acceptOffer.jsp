@@ -24,7 +24,7 @@
 	
 			
 		
-			String update = "UPDATE RideRequests Set rideAccepted='1', driverUsername=?, offerID=? Where requestID=?";
+			String update = "UPDATE RideRequests Set rideAccepted='1', driverUsername=? Where requestID=?";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(update);
 			
@@ -37,7 +37,8 @@
 	
 			//Run the query against the DB
 			ps.executeUpdate();
-			//close the connectionString sender = (String) session.getAttribute("UserName");
+			//close the connection
+			//String sender = (String) session.getAttribute("UserName");
 			
 			String getReciever = "SELECT r.riderUsername as reciever FROM RideRequests r WHERE r.requestID=?";
 			PreparedStatement stmt2 = con.prepareStatement(getReciever);
@@ -53,8 +54,9 @@
 				con.close();
 			}
 			
-			String inc = "UPDATE userTable SET ridesGiven = ridesGiven + 1 WHERE username = " + driverUsername;
-			PreparedStatment psInc = con.prepareStatement(inc);
+			String inc = "UPDATE UserTable SET ridesGiven = ridesGiven + 1 WHERE username =?";
+			PreparedStatement psInc = con.prepareStatement(inc);
+			psInc.setString(1,driverUsername);
 			psInc.executeUpdate();
 			
 			//Make an insert statement for the Sells table:

@@ -69,7 +69,6 @@ out.print((String) session.getAttribute("UserName"));
 	<td>How Often? Every:</td><td><input type="text" name="numOften"> days/weeks/months</td>
 	</tr>
 	</table>
-	<input type="submit" value="Add Offer">
 	<input type="submit" value="Add Request">
 	</form>
 <br>
@@ -103,14 +102,15 @@ out.print((String) session.getAttribute("UserName"));
 		<tr bgcolor="#56A5EC">
 		<td><%=resultSet.getString("time")%></td>
 		<td><%=resultSet.getString("Date")%></td>
-		<td><%=resultSet.getInt("fromLot")%></td>
-		<td><%=resultSet.getInt("toLot")%></td>
+		<td><%=resultSet.getString("fromLot")%></td>
+		<td><%=resultSet.getString("toLot")%></td>
 		</tr>			
 		
 	<%
 	}
 %>
 </table>
+<br>
 <br>
 <br>
 <br>
@@ -145,8 +145,8 @@ out.print((String) session.getAttribute("UserName"));
 			<td><%=resultSet2.getInt("requestID")%></td>
 			<td><%=resultSet2.getString("time")%></td>
 			<td><%=resultSet2.getString("Date")%></td>
-			<td><%=resultSet2.getInt("FromLot")%></td>
-			<td><%=resultSet2.getInt("ToLot")%></td>
+			<td><%=resultSet2.getString("FromLot")%></td>
+			<td><%=resultSet2.getString("ToLot")%></td>
 			<td><%=resultSet2.getString("driverUsername")%></td>
 			</tr>			
 			
@@ -196,14 +196,16 @@ out.print((String) session.getAttribute("UserName"));
 			<td><%=resultSet3.getInt("requestID")%></td>
 			<td><%=resultSet3.getString("time")%></td>
 			<td><%=resultSet3.getString("Date")%></td>
-			<td><%=resultSet3.getInt("FromLot")%></td>
-			<td><%=resultSet3.getInt("ToLot")%></td>
+			<td><%=resultSet3.getString("FromLot")%></td>
+			<td><%=resultSet3.getString("ToLot")%></td>
 			<td><%=resultSet3.getString("driverUsername")%></td>
 			</tr>			
 			
 		<%
 		}
+	con.close();
 	%>
+	
 </table>
 <br>
 <br>
@@ -241,5 +243,19 @@ out.print((String) session.getAttribute("UserName"));
 <input type="submit" value="View LeaderBoard" />
 <br>
 </form>
+<br>
+<br>
+<br>
+
+Report User
+<form  method="post" action="<%=request.getContextPath()%>/Workers/sendReport.jsp">
+	<table>
+	<tr>    
+	<td>Username:</td><td><input type="text" name="username"></td><td>*</td>
+	</tr>
+	</table>
+	<input type="submit" value="Report User">
+	</form>
+	
 </body>
 </html>
