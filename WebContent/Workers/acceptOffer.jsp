@@ -53,6 +53,10 @@
 				con.close();
 			}
 			
+			String inc = "UPDATE userTable SET ridesGiven = ridesGiven + 1 WHERE username = " + driverUsername;
+			PreparedStatment psInc = con.prepareStatement(inc);
+			psInc.executeUpdate();
+			
 			//Make an insert statement for the Sells table:
 			String insert = "INSERT INTO Emails(timeSent, sender, subject, message, receiver)"
 					+ "VALUES (?,?,?,?,?)";

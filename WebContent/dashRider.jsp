@@ -230,5 +230,16 @@ out.print((String) session.getAttribute("UserName"));
 	</table>
 	<input type="submit" value="Rate!">
 	</form>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2 ><font color="0000FF"><strong>LeaderBoard</strong></font></h2>
+<form action = "leaderboard.jsp">
+<br>
+<input type="submit" value="View LeaderBoard" />
+<br>
+</form>
 </body>
 </html>
